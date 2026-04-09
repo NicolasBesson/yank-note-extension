@@ -106,11 +106,11 @@ export async function processReveal (win: Window, opts: Record<string, any>, con
 }
 
 export async function present (print = false) {
-  if (!ctx.getPremium()) {
-    ctx.ui.useToast().show('info', ctx.i18n.t('premium.need-purchase', extensionId))
-    ctx.showPremium()
-    throw new Error('Extension requires premium')
-  }
+  // if (!ctx.getPremium()) {
+  //   ctx.ui.useToast().show('info', ctx.i18n.t('premium.need-purchase', extensionId))
+  //   ctx.showPremium()
+  //   throw new Error('Extension requires premium')
+  // }
 
   const htmlTitle = ctx.store.state.currentFile?.name || 'Reveal.js'
   const opts = getOpts()
