@@ -1,0 +1,826 @@
+
+/* SEB Professional – Reveal.js Extended Theme */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+
+/* ── Design tokens ─────────────────────────────────────────── 
+   All spacing uses % of slide dimensions so Reveal.js's
+   transform-based scaling works identically on any screen.   */
+:root {
+  --r-background-color: #e8e5e0;
+  --r-main-font: 'Montserrat', sans-serif;
+  --r-main-font-size: 42px;
+  --r-main-color: #4b4b45;
+  --r-block-margin: 20px;
+  --r-heading-margin: 0 0 20px 0;
+  --r-heading-font: 'Montserrat', sans-serif;
+  --r-heading-color: #4b4b45;
+  --r-heading-line-height: 1.2;
+  --r-heading-letter-spacing: normal;
+  --r-heading-text-transform: uppercase;
+  --r-heading-text-shadow: none;
+  --r-heading-font-weight: 700;
+  --r-heading1-text-shadow: none;
+  --r-heading1-size: 2.5em;
+  --r-heading2-size: 1.6em;
+  --r-heading3-size: 1.3em;
+  --r-heading4-size: 1em;
+  --r-code-font: monospace;
+  --r-link-color: #e30613;
+  --r-link-color-dark: #b0050f;
+  --r-link-color-hover: #ff3340;
+  --r-selection-background-color: rgba(227, 6, 19, 0.35);
+  --r-selection-color: #fff;
+  --r-overlay-element-bg-color: 0, 0, 0;
+  --r-overlay-element-fg-color: 240, 240, 240;
+
+  /* shared spacing — percentages of the slide canvas */
+  --seb-margin-h: 3%;             /* ≈ 60 px on 1920 */
+  --seb-header-top: 2%;           /* ≈ 20 px on 1080 */
+
+  /* title slide (#) */
+  --ts-h1-top: 15%;               /* ≈ 160 px on 1080 */
+  --ts-h2-top: 45%;               /* ≈ 480 px on 1080 */
+
+  /* content slides */
+  --cs-padding-top: 8.5%;         /* ≈ 92 px on 1080 */
+  --cs-h1-size: 1.25em;           /* ≈ 52 px at 42px base */
+  --cs-h2-size: 0.67em;           /* ≈ 28 px at 42px base */
+  --cs-body-size: 0.57em;         /* ≈ 24 px at 42px base */
+}
+
+/*********************************************
+ * VIEWPORT
+ *********************************************/
+.reveal-viewport {
+  background: var(--r-background-color);
+  background-color: var(--r-background-color);
+}
+
+.reveal {
+  font-family: var(--r-main-font);
+  font-size: var(--r-main-font-size);
+  font-weight: normal;
+  color: var(--r-main-color);
+}
+
+.reveal ::selection {
+  color: var(--r-selection-color);
+  background: var(--r-selection-background-color);
+  text-shadow: none;
+}
+
+.reveal ::-moz-selection {
+  color: var(--r-selection-color);
+  background: var(--r-selection-background-color);
+  text-shadow: none;
+}
+
+.reveal .slides section,
+.reveal .slides section > section {
+  line-height: 1.3;
+  font-weight: inherit;
+}
+
+/* ── Global background (rainbow bar on every slide) ────────── */
+.reveal {
+  background:
+    linear-gradient(
+      to right,
+      #e30613  0%,
+      #f39200 20%,
+      #d4b800 35%,
+      #6f8f2f 47%,
+      #2f7f8f 60%,
+      #3f3d8f 80%,
+      #7f1f5f 100%
+    ) bottom / 100% 6px no-repeat,
+    var(--r-background-color);
+}
+
+/* ── Force sans-serif font on ALL elements ─────────────────── */
+.reveal,
+.reveal *,
+.reveal .slides section,
+.reveal .slides section * {
+  font-family: 'Montserrat', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif !important;
+}
+
+/* ── Override reveal.js default centering ──────────────────── */
+.reveal .slides {
+  text-align: left !important;
+}
+
+/* ── Global typography ─────────────────────────────────────── */
+.reveal h1 {
+  font-size: 2.3em;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #4b4b45 !important;
+}
+
+.reveal h2 {
+  font-size: var(--cs-h2-size);
+  font-weight: 400 !important;
+  color: #7f7f78 !important;
+  margin: 0;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.reveal h3 {
+  font-size: 0.57em;
+  font-weight: 400;
+  color: #7f7f78 !important;
+  margin: 0;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ALL SLIDES: SEB PROFESSIONAL header via ::before
+   Uses the actual logo PNG from dist/logos/ (path relative to CSS)
+   ═══════════════════════════════════════════════════════════════ */
+.reveal .slides > section::before {
+  content: '';
+  position: absolute;
+  top: var(--seb-header-top);
+  left: var(--seb-margin-h) !important;
+  right: auto !important;
+  width: 25%;
+  height: 3%;
+  background: url('../logos/seb-professional.png') no-repeat left center;
+  background-size: contain;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TITLE SLIDE  (# heading = section:first-child)
+   ═══════════════════════════════════════════════════════════════ */
+.reveal .slides > section:first-child {
+  height: 100%;
+  top: 0 !important;
+}
+
+/* Main presentation title */
+.reveal .slides > section:first-child > h1 {
+  position: absolute;
+  top: var(--ts-h1-top);
+  left: var(--seb-margin-h) !important;
+  right: var(--seb-margin-h) !important;
+  width: auto !important;
+  text-align: left !important;
+  font-size: 2.3em !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  color: #4b4b45 !important;
+  margin: 0;
+  line-height: 1.15;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+/* Subtitle / Date / Author */
+.reveal .slides > section:first-child > h2,
+.reveal .slides > section:first-child > p:not(.footer-logos) {
+  position: absolute;
+  top: var(--ts-h2-top);
+  left: var(--seb-margin-h) !important;
+  width: 51%;
+  text-align: left !important;
+  font-size: 1em !important;
+  font-weight: 400 !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  color: #7f7f78 !important;
+  margin: 0;
+}
+
+/* Footer logos on title slide – rendered via ::after using
+   multiple CSS background-images (no <img> tags needed).
+   Paths are relative to this CSS file → ../logos/            */
+.reveal .slides > section:first-child::after {
+  content: '';
+  position: absolute;
+  bottom: 3%;
+  left: 0;
+  right: 0;
+  height: 4%;
+  display: flex;
+  z-index: 10;
+  pointer-events: none;
+  background:
+    url('../logos/wmf.png')        no-repeat calc(50% - 15%) center / auto 80%,
+    url('../logos/schaerer.png')    no-repeat calc(50% - 7%)  center / auto 65%,
+    url('../logos/curtis.png')     no-repeat calc(50%)        center / auto 80%,
+    url('../logos/lasanmarco.png') no-repeat calc(50% + 7%)   center / auto 65%,
+    url('../logos/zummo.png')      no-repeat calc(50% + 16%)  center / auto 65%;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CONTENT SLIDES (every slide after the first)
+   # = slide title, ## = subtitle
+   ═══════════════════════════════════════════════════════════════ */
+.reveal .slides > section:not(:first-child) {
+  height: 100%;
+  top: 0 !important;
+  text-align: left;
+  padding: var(--cs-padding-top) var(--seb-margin-h) 5%;
+  box-sizing: border-box;
+}
+
+/* # Slide title on content slides */
+.reveal .slides > section:not(:first-child) > h1 {
+  font-size: var(--cs-h1-size) !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #4b4b45 !important;
+  margin: 0 0 0.25em 0;
+  line-height: 1.1;
+  text-align: left !important;
+}
+
+/* ## Slide subtitle on content slides */
+.reveal .slides > section:not(:first-child) > h2 {
+  font-size: var(--cs-h2-size) !important;
+  font-weight: 400 !important;
+  color: #7f7f78 !important;
+  margin: 0 0 0.85em 0;
+  text-align: left !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+}
+
+/* Body text, lists, tables */
+.reveal .slides > section:not(:first-child) > p,
+.reveal .slides > section:not(:first-child) > ul,
+.reveal .slides > section:not(:first-child) > ol,
+.reveal .slides > section:not(:first-child) > table,
+.reveal .slides > section:not(:first-child) > pre,
+.reveal .slides > section:not(:first-child) > blockquote {
+  font-size: var(--cs-body-size) !important;
+  line-height: 1.55;
+  text-align: left !important;
+  color: #4b4b45;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.reveal .slides > section:not(:first-child) > ul,
+.reveal .slides > section:not(:first-child) > ol {
+  padding-left: 1.4em;
+}
+
+/*********************************************
+ * IMAGES – fit within slides (from white.css)
+ *********************************************/
+.reveal img,
+.reveal video,
+.reveal iframe {
+  max-width: 95%;
+  max-height: 95%;
+}
+
+.reveal img {
+  margin: var(--r-block-margin) 0;
+}
+
+/*********************************************
+ * PARAGRAPHS
+ *********************************************/
+.reveal p {
+  margin: var(--r-block-margin) 0;
+  line-height: 1.3;
+}
+
+/*********************************************
+ * LISTS
+ *********************************************/
+.reveal ol,
+.reveal dl,
+.reveal ul {
+  display: inline-block;
+  text-align: left;
+  margin: 0 0 0 1em;
+}
+
+.reveal ol {
+  list-style-type: decimal;
+}
+
+.reveal ul {
+  list-style-type: disc;
+}
+
+.reveal ul ul {
+  list-style-type: square;
+}
+
+.reveal ul ul ul {
+  list-style-type: circle;
+}
+
+.reveal ul ul,
+.reveal ul ol,
+.reveal ol ol,
+.reveal ol ul {
+  display: block;
+  margin-left: 40px;
+}
+
+.reveal dt {
+  font-weight: bold;
+}
+
+.reveal dd {
+  margin-left: 40px;
+}
+
+/*********************************************
+ * TABLES – responsive, fit within slide
+ *********************************************/
+.reveal table {
+  margin: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  max-width: 100%;
+  table-layout: auto;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  font-size: 0.85em;
+}
+
+.reveal table th {
+  font-weight: bold;
+}
+
+.reveal table th,
+.reveal table td {
+  text-align: left;
+  padding: 0.3em 0.6em;
+  border-bottom: 1px solid rgba(75, 75, 69, 0.3);
+  max-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.reveal table th[align=center],
+.reveal table td[align=center] {
+  text-align: center;
+}
+
+.reveal table th[align=right],
+.reveal table td[align=right] {
+  text-align: right;
+}
+
+.reveal table tbody tr:last-child th,
+.reveal table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Scrollable wrapper for very wide tables */
+.reveal .table-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/*********************************************
+ * BLOCKQUOTES
+ *********************************************/
+.reveal blockquote {
+  display: block;
+  position: relative;
+  width: 70%;
+  margin: var(--r-block-margin) auto;
+  padding: 5px;
+  font-style: italic;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
+}
+
+.reveal blockquote p:first-child,
+.reveal blockquote p:last-child {
+  display: inline-block;
+}
+
+.reveal q {
+  font-style: italic;
+}
+
+/*********************************************
+ * CODE
+ *********************************************/
+.reveal pre {
+  display: block;
+  position: relative;
+  width: 90%;
+  margin: var(--r-block-margin) auto;
+  text-align: left;
+  font-size: 0.55em;
+  font-family: var(--r-code-font);
+  line-height: 1.2em;
+  word-wrap: break-word;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.reveal code {
+  font-family: var(--r-code-font);
+  text-transform: none;
+  tab-size: 2;
+}
+
+.reveal pre code {
+  display: block;
+  padding: 5px;
+  overflow: auto;
+  max-height: 400px;
+  word-wrap: normal;
+}
+
+.reveal .code-wrapper {
+  white-space: normal;
+}
+
+.reveal .code-wrapper code {
+  white-space: pre;
+}
+
+/*********************************************
+ * MISC
+ *********************************************/
+.reveal strong,
+.reveal b {
+  font-weight: bold;
+}
+
+.reveal em {
+  font-style: italic;
+}
+
+.reveal sup {
+  vertical-align: super;
+  font-size: smaller;
+}
+
+.reveal sub {
+  vertical-align: sub;
+  font-size: smaller;
+}
+
+.reveal small {
+  display: inline-block;
+  font-size: 0.6em;
+  line-height: 1.2em;
+  vertical-align: top;
+}
+
+.reveal small * {
+  vertical-align: top;
+}
+
+/* Remove trailing margins after titles */
+.reveal h1:last-child,
+.reveal h2:last-child,
+.reveal h3:last-child,
+.reveal h4:last-child,
+.reveal h5:last-child,
+.reveal h6:last-child {
+  margin-bottom: 0;
+}
+
+/*********************************************
+ * LINKS
+ *********************************************/
+.reveal a {
+  color: var(--r-link-color);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.reveal a:hover {
+  color: var(--r-link-color-hover);
+  text-shadow: none;
+  border: none;
+}
+
+.reveal .roll span:after {
+  color: #fff;
+  background: var(--r-link-color-dark);
+}
+
+/*********************************************
+ * Frame helper
+ *********************************************/
+.reveal .r-frame {
+  border: 4px solid var(--r-main-color);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+.reveal a .r-frame {
+  transition: all 0.15s linear;
+}
+
+.reveal a:hover .r-frame {
+  border-color: var(--r-link-color);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.55);
+}
+
+/*********************************************
+ * NAVIGATION CONTROLS
+ *********************************************/
+.reveal .controls {
+  color: var(--r-link-color);
+}
+
+/*********************************************
+ * PROGRESS BAR
+ *********************************************/
+.reveal .progress {
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--r-link-color);
+}
+
+/*********************************************
+ * PRINT BACKGROUND
+ *********************************************/
+@media print {
+  .backgrounds {
+    background-color: var(--r-background-color);
+  }
+}
+
+/*********************************************
+ * PRINT – preserve SEB branding
+ *
+ * Two modes:
+ *  1. html.reveal-print  → Reveal.js ?print-pdf
+ *     Sections are position:absolute inside .pdf-page.
+ *     Reveal.js auto-centers content by computing top offsets;
+ *     we override to top:0 + height:100% for full-page slides.
+ *     background-image on ::before is stripped by print engines
+ *     → use content:url() which creates a replaced element that
+ *       browsers WILL print.
+ *  2. @media print        → browser Ctrl+P
+ *     Sections are position:static with height:auto;
+ *     pseudo-elements must use flow layout (not absolute).
+ *********************************************/
+
+/* ── reveal-print mode (print-pdf URL param) ─────────── */
+html.reveal-print *,
+html.reveal-print *::before,
+html.reveal-print *::after {
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+/* In print-pdf mode, Reveal.js wraps each slide in a .pdf-page div,
+   so sections are .slides > .pdf-page > section (NOT direct children
+   of .slides). Force each section to fill its pdf-page top-aligned.  */
+html.reveal-print .reveal .slides .pdf-page > section {
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: visible !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Content slides: re-apply padding for header clearance + margins */
+html.reveal-print .reveal .slides .pdf-page:not(:first-child) > section {
+  padding: var(--cs-padding-top) var(--seb-margin-h) 5% !important;
+}
+
+/* SEB header logo — background-image with print-color-adjust renders
+   correctly in both the screen preview and Chromium print-to-PDF.    */
+html.reveal-print .reveal .slides .pdf-page > section::before {
+  content: '' !important;
+  display: block !important;
+  position: absolute !important;
+  top: var(--seb-header-top) !important;
+  left: var(--seb-margin-h) !important;
+  right: auto !important;
+  width: 16% !important;
+  height: 3% !important;
+  background: url('../logos/seb-professional.png') no-repeat left center !important;
+  background-size: contain !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+  z-index: 10 !important;
+  pointer-events: none !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Title slide: re-force absolute positioning of children
+   (Reveal.js print layout may reset these)                     */
+html.reveal-print .reveal .slides .pdf-page:first-child > section > h1 {
+  position: absolute !important;
+  top: var(--ts-h1-top) !important;
+  left: var(--seb-margin-h) !important;
+  right: var(--seb-margin-h) !important;
+  width: auto !important;
+  text-align: left !important;
+  font-size: 2.3em !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  color: #4b4b45 !important;
+  margin: 0 !important;
+  line-height: 1.15 !important;
+}
+
+html.reveal-print .reveal .slides .pdf-page:first-child > section > h2,
+html.reveal-print .reveal .slides .pdf-page:first-child > section > p {
+  position: absolute !important;
+  top: var(--ts-h2-top) !important;
+  left: var(--seb-margin-h) !important;
+  width: 51% !important;
+  text-align: left !important;
+  font-size: 0.67em !important;
+  font-weight: 400 !important;
+  text-transform: none !important;
+  color: #7f7f78 !important;
+  margin: 0 !important;
+}
+
+/* Footer logos on title slide */
+html.reveal-print .reveal .slides .pdf-page:first-child > section::after {
+  content: '' !important;
+  display: block !important;
+  position: absolute !important;
+  bottom: 3% !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 4% !important;
+  z-index: 10 !important;
+  pointer-events: none !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  background:
+    url('../logos/wmf.png')        no-repeat calc(50% - 15%) center / auto 80%,
+    url('../logos/schaerer.png')    no-repeat calc(50% - 7%)  center / auto 65%,
+    url('../logos/curtis.png')     no-repeat calc(50%)        center / auto 80%,
+    url('../logos/lasanmarco.png') no-repeat calc(50% + 7%)   center / auto 65%,
+    url('../logos/zummo.png')      no-repeat calc(50% + 16%)  center / auto 65% !important;
+}
+
+/* Rainbow bar at bottom of each pdf-page */
+html.reveal-print .reveal .slides .pdf-page {
+  background:
+    linear-gradient(
+      to right,
+      #e30613  0%,
+      #f39200 20%,
+      #d4b800 35%,
+      #6f8f2f 47%,
+      #2f7f8f 60%,
+      #3f3d8f 80%,
+      #7f1f5f 100%
+    ) bottom / 100% 6px no-repeat,
+    var(--r-background-color) !important;
+}
+
+/* Preserve SEB heading colors in print-pdf */
+html.reveal-print .reveal h1,
+html.reveal-print .reveal h4 {
+  color: #4b4b45 !important;
+}
+html.reveal-print .reveal h2,
+html.reveal-print .reveal h3 {
+  color: #7f7f78 !important;
+}
+
+/* ── @media print mode (browser Ctrl+P) ──────────────── */
+@media print {
+  *,
+  *::before,
+  *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  html:not(.print-pdf) .reveal {
+    background:
+      linear-gradient(
+        to right,
+        #e30613  0%,
+        #f39200 20%,
+        #d4b800 35%,
+        #6f8f2f 47%,
+        #2f7f8f 60%,
+        #3f3d8f 80%,
+        #7f1f5f 100%
+      ) bottom / 100% 6px no-repeat,
+      var(--r-background-color) !important;
+  }
+
+  html:not(.print-pdf) .reveal .slides section {
+    position: relative !important;
+    min-height: 600px !important;
+    background: var(--r-background-color) !important;
+    page-break-inside: avoid !important;
+  }
+
+  html:not(.print-pdf) .reveal .slides > section:not(:first-child) {
+    padding: 60px 20px 40px !important;
+  }
+
+  /* SEB header logo — content:url() for reliable print */
+  html:not(.print-pdf) .reveal .slides > section::before {
+    content: url('../logos/seb-professional.png') !important;
+    display: block !important;
+    position: relative !important;
+    width: 160px !important;
+    height: 30px !important;
+    margin: 0 0 16px 0 !important;
+    object-fit: contain !important;
+    object-position: left center !important;
+    z-index: 10 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  /* Title slide footer logos */
+  html:not(.print-pdf) .reveal .slides > section:first-child::after {
+    content: '' !important;
+    display: block !important;
+    position: relative !important;
+    width: 100% !important;
+    height: 30px !important;
+    margin-top: auto !important;
+    z-index: 10 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background:
+      url('../logos/wmf.png')        no-repeat calc(50% - 15%) center / auto 80%,
+      url('../logos/schaerer.png')    no-repeat calc(50% - 7%)  center / auto 65%,
+      url('../logos/curtis.png')     no-repeat calc(50%)        center / auto 80%,
+      url('../logos/lasanmarco.png') no-repeat calc(50% + 7%)   center / auto 65%,
+      url('../logos/zummo.png')      no-repeat calc(50% + 16%)  center / auto 65% !important;
+  }
+
+  /* Rainbow bar on each printed section */
+  html:not(.print-pdf) .reveal .slides section {
+    border-bottom: 6px solid transparent;
+    border-image: linear-gradient(
+      to right,
+      #e30613  0%,
+      #f39200 20%,
+      #d4b800 35%,
+      #6f8f2f 47%,
+      #2f7f8f 60%,
+      #3f3d8f 80%,
+      #7f1f5f 100%
+    ) 1 !important;
+  }
+
+  /* Preserve SEB theme colors */
+  html:not(.print-pdf) .reveal h1,
+  html:not(.print-pdf) .reveal h4 {
+    color: #4b4b45 !important;
+  }
+
+  html:not(.print-pdf) .reveal h2,
+  html:not(.print-pdf) .reveal h3 {
+    color: #7f7f78 !important;
+  }
+
+  html:not(.print-pdf) .reveal li,
+  html:not(.print-pdf) .reveal p,
+  html:not(.print-pdf) .reveal td {
+    color: #4b4b45 !important;
+    font-size: inherit !important;
+  }
+}
+
+/* ── Footer logos via HTML (still supported if user adds them) ─ */
+.footer-logos {
+  position: absolute !important;
+  bottom: 22px !important;
+  left: 0 !important;
+  right: 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  gap: 60px !important;
+  align-items: center !important;
+  z-index: 10;
+}
+
+.footer-logos img {
+  height: 32px;
+  max-height: 32px;
+  width: auto;
+}
+
+/* ── Section-divider slide ─────────────────────────────────── */
+.section-divider h1 {
+  margin-top: 200px;
+}

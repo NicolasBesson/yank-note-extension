@@ -12,6 +12,8 @@ export default defineConfig({
       { src: 'node_modules/reveal.js/dist/*.css', dest: 'dist' },
       { src: 'node_modules/reveal.js/dist/theme', dest: 'dist' },
       { src: 'node_modules/reveal.js/plugin/*', dest: 'dist/plugin' },
+      { src: 'theme/sebpro.css', dest: 'dist/theme' },
+      { src: 'logos/*', dest: 'dist/logos' },
     ],
     hook: 'writeBundle',
   })],
