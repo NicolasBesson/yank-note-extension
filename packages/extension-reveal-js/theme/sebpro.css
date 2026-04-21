@@ -276,6 +276,48 @@
 }
 
 /*********************************************
+ * TWO-COLUMN LAYOUT  (.cols-2)
+ *********************************************/
+.reveal .cols-2 {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  gap: 4%;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  font-size: var(--cs-body-size);
+  line-height: 1.55;
+}
+
+.reveal .cols-2 > div {
+  flex: 1 1 0;
+  min-width: 0;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.reveal .cols-2 img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0;
+}
+
+/* Lists and paragraphs inside columns must be block-level */
+.reveal .cols-2 ul,
+.reveal .cols-2 ol {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding-left: 1.4em;
+}
+
+.reveal .cols-2 p {
+  margin: 0 0 0.5em 0;
+}
+
+/*********************************************
  * IMAGES – fit within slides (from white.css)
  *********************************************/
 .reveal img,
@@ -688,6 +730,41 @@ html.reveal-print .reveal .slides .pdf-page {
     var(--r-background-color) !important;
 }
 
+/* Two-column layout in print-pdf */
+html.reveal-print .reveal .cols-2 {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  gap: 4% !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+html.reveal-print .reveal .cols-2 > div {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+html.reveal-print .reveal .cols-2 img {
+  max-width: 100% !important;
+  height: auto !important;
+  display: block !important;
+  margin: 0 !important;
+}
+
+html.reveal-print .reveal .cols-2 ul,
+html.reveal-print .reveal .cols-2 ol {
+  display: block !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding-left: 1.4em !important;
+}
+
+html.reveal-print .reveal .cols-2 p {
+  margin: 0 0 0.5em 0 !important;
+}
+
 /* Preserve SEB heading colors in print-pdf */
 html.reveal-print .reveal h1,
 html.reveal-print .reveal h4 {
@@ -696,6 +773,17 @@ html.reveal-print .reveal h4 {
 html.reveal-print .reveal h2,
 html.reveal-print .reveal h3 {
   color: #7f7f78 !important;
+}
+
+/* Fix: enforce correct size and block display for lists in print-pdf */
+html.reveal-print .reveal .slides .pdf-page > section > ul,
+html.reveal-print .reveal .slides .pdf-page > section > ol {
+  display: block !important;
+  font-size: var(--cs-body-size) !important;
+}
+
+html.reveal-print .reveal .slides .pdf-page > section > ol {
+  list-style-type: decimal !important;
 }
 
 /* ── @media print mode (browser Ctrl+P) ──────────────── */
@@ -798,6 +886,52 @@ html.reveal-print .reveal h3 {
   html:not(.print-pdf) .reveal td {
     color: #4b4b45 !important;
     font-size: inherit !important;
+  }
+
+  /* Fix: enforce correct size and block display for lists on content slides */
+  html:not(.print-pdf) .reveal .slides > section:not(:first-child) > ul,
+  html:not(.print-pdf) .reveal .slides > section:not(:first-child) > ol {
+    display: block !important;
+    font-size: var(--cs-body-size) !important;
+  }
+
+  html:not(.print-pdf) .reveal .slides > section:not(:first-child) > ol {
+    list-style-type: decimal !important;
+  }
+
+  /* Two-column layout – browser Ctrl+P */
+  html:not(.print-pdf) .reveal .cols-2 {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    gap: 4% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  html:not(.print-pdf) .reveal .cols-2 > div {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  html:not(.print-pdf) .reveal .cols-2 img {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    margin: 0 !important;
+  }
+
+  html:not(.print-pdf) .reveal .cols-2 ul,
+  html:not(.print-pdf) .reveal .cols-2 ol {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding-left: 1.4em !important;
+  }
+
+  html:not(.print-pdf) .reveal .cols-2 p {
+    margin: 0 0 0.5em 0 !important;
   }
 }
 

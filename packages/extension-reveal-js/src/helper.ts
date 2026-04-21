@@ -65,6 +65,48 @@ export async function processReveal (win: Window, opts: Record<string, any>, con
   const slides = win.window.document.getElementById('reveal-slides')
   slides!.innerHTML = tmp.firstElementChild!.innerHTML!
 
+  // markdown-it-container nesting limitation: a bare `:::` is the closing fence
+  // for ALL container types, but each named rule (section, div, …) only counts
+  // openers of its OWN type as nesting-incrementors. So `:::section` does NOT
+  // count `:::div` openers — it closes on the FIRST bare `:::`, which is meant
+  // to close an inner `:::div`. This leaves:
+  //   • orphaned top-level <div> siblings of <section> in .slides
+  //     (the inner divs that were cut off), and
+  //   • orphaned bare `:::` fences (no opener left) rendered as <p>:::</p>.
+  //
+  // Fix in two passes:
+  //  Pass 1 – re-attach orphaned elements to the preceding <section>.
+  //    If the last child of that section is a .cols-2 div with < 2 columns,
+  //    append the orphan as the missing column; otherwise append to the section.
+  //  Pass 2 – remove any <p> whose sole text content is `:::` (markdown-it
+  //    fall-through artefact from unmatched closing fences).
+  let lastSection: Element | null = null
+  for (const child of Array.from(slides!.children)) {
+    if (child.tagName === 'SECTION') {
+      lastSection = child
+    } else if (lastSection) {
+      const lastChild = lastSection.lastElementChild
+      if (
+        child.tagName === 'DIV' &&
+        lastChild &&
+        lastChild.tagName === 'DIV' &&
+        lastChild.classList.contains('cols-2') &&
+        lastChild.children.length < 2
+      ) {
+        lastChild.appendChild(child)
+      } else {
+        lastSection.appendChild(child)
+      }
+    }
+  }
+
+  // Pass 2: remove bare `:::` paragraph artefacts left by unmatched fences
+  for (const p of Array.from(slides!.querySelectorAll('section > p'))) {
+    if (p.textContent?.trim() === ':::') {
+      p.remove()
+    }
+  }
+
   const Reveal = (win.window as any).Reveal
 
   if (init) {
