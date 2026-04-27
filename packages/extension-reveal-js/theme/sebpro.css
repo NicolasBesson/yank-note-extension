@@ -650,7 +650,7 @@ html.reveal-print .reveal .slides .pdf-page > section::before {
   top: var(--seb-header-top) !important;
   left: var(--seb-margin-h) !important;
   right: auto !important;
-  width: 16% !important;
+  width: 25% !important;
   height: 3% !important;
   background: url('../logos/seb-professional.png') no-repeat left center !important;
   background-size: contain !important;
@@ -674,9 +674,12 @@ html.reveal-print .reveal .slides .pdf-page:first-child > section > h1 {
   font-size: 2.3em !important;
   font-weight: 700 !important;
   text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
   color: #4b4b45 !important;
   margin: 0 !important;
   line-height: 1.15 !important;
+  overflow-wrap: break-word !important;
+  word-wrap: break-word !important;
 }
 
 html.reveal-print .reveal .slides .pdf-page:first-child > section > h2,
@@ -686,9 +689,10 @@ html.reveal-print .reveal .slides .pdf-page:first-child > section > p {
   left: var(--seb-margin-h) !important;
   width: 51% !important;
   text-align: left !important;
-  font-size: 0.67em !important;
+  font-size: 1em !important;
   font-weight: 400 !important;
   text-transform: none !important;
+  letter-spacing: normal !important;
   color: #7f7f78 !important;
   margin: 0 !important;
 }
@@ -789,17 +793,39 @@ html.reveal-print .reveal .slides .pdf-page > section > ol {
 /* Markdown alerts in print-pdf */
 html.reveal-print .reveal .markdown-alert {
   border-left: 4px solid #0969da !important;
+  border-radius: 4px !important;
   padding: 0.4em 0.8em !important;
   margin: 0.6em 0 !important;
   background: rgba(255, 255, 255, 0.35) !important;
+  font-size: var(--cs-body-size) !important;
+  line-height: 1.5 !important;
+  text-align: left !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
   -webkit-print-color-adjust: exact !important;
   print-color-adjust: exact !important;
 }
 html.reveal-print .reveal .markdown-alert .markdown-alert-title {
   font-weight: 700 !important;
+  font-size: 1em !important;
   display: flex !important;
   align-items: center !important;
   gap: 0.35em !important;
+  margin: 0 0 0.2em 0 !important;
+  color: #0969da !important;
+}
+html.reveal-print .reveal .markdown-alert .markdown-alert-title .octicon,
+html.reveal-print .reveal .markdown-alert .markdown-alert-title svg,
+html.reveal-print .reveal .markdown-alert .markdown-alert-icon {
+  width: 1em !important;
+  height: 1em !important;
+  flex-shrink: 0 !important;
+  fill: currentColor !important;
+}
+html.reveal-print .reveal .markdown-alert > p:not(.markdown-alert-title) {
+  font-size: 0.88em !important;
+  margin: 0.15em 0 !important;
+  color: #4b4b45 !important;
 }
 html.reveal-print .reveal .markdown-alert-note { border-left-color: #0969da !important; }
 html.reveal-print .reveal .markdown-alert-note .markdown-alert-title { color: #0969da !important; }
@@ -811,6 +837,41 @@ html.reveal-print .reveal .markdown-alert-caution { border-left-color: #8250df !
 html.reveal-print .reveal .markdown-alert-caution .markdown-alert-title { color: #8250df !important; }
 html.reveal-print .reveal .markdown-alert-important { border-left-color: #d1242f !important; }
 html.reveal-print .reveal .markdown-alert-important .markdown-alert-title { color: #d1242f !important; }
+
+/* Content slide headings in print-pdf */
+html.reveal-print .reveal .slides .pdf-page:not(:first-child) > section > h1 {
+  font-size: var(--cs-h1-size) !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  color: #4b4b45 !important;
+  margin: 0 0 0.25em 0 !important;
+  line-height: 1.1 !important;
+  text-align: left !important;
+}
+html.reveal-print .reveal .slides .pdf-page:not(:first-child) > section > h2 {
+  font-size: var(--cs-h2-size) !important;
+  font-weight: 400 !important;
+  color: #7f7f78 !important;
+  margin: 0 0 0.85em 0 !important;
+  text-align: left !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+}
+
+/* Content body elements in print-pdf */
+html.reveal-print .reveal .slides .pdf-page:not(:first-child) > section > p,
+html.reveal-print .reveal .slides .pdf-page:not(:first-child) > section > table,
+html.reveal-print .reveal .slides .pdf-page:not(:first-child) > section > pre,
+html.reveal-print .reveal .slides .pdf-page:not(:first-child) > section > blockquote {
+  font-size: var(--cs-body-size) !important;
+  line-height: 1.55 !important;
+  text-align: left !important;
+  color: #4b4b45 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
 
 /* ── @media print mode (browser Ctrl+P) ──────────────── */
 @media print {
@@ -844,7 +905,65 @@ html.reveal-print .reveal .markdown-alert-important .markdown-alert-title { colo
   }
 
   html:not(.print-pdf) .reveal .slides > section:not(:first-child) {
-    padding: 60px 20px 40px !important;
+    padding: var(--cs-padding-top) var(--seb-margin-h) 5% !important;
+  }
+
+  /* Title slide: re-apply absolute positioning for h1/h2 */
+  html:not(.print-pdf) .reveal .slides > section:first-child {
+    position: relative !important;
+    height: 100% !important;
+  }
+  html:not(.print-pdf) .reveal .slides > section:first-child > h1 {
+    position: absolute !important;
+    top: var(--ts-h1-top) !important;
+    left: var(--seb-margin-h) !important;
+    right: var(--seb-margin-h) !important;
+    width: auto !important;
+    text-align: left !important;
+    font-size: 2.3em !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.04em !important;
+    color: #4b4b45 !important;
+    margin: 0 !important;
+    line-height: 1.15 !important;
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+  }
+  html:not(.print-pdf) .reveal .slides > section:first-child > h2,
+  html:not(.print-pdf) .reveal .slides > section:first-child > p:not(.footer-logos) {
+    position: absolute !important;
+    top: var(--ts-h2-top) !important;
+    left: var(--seb-margin-h) !important;
+    width: 51% !important;
+    text-align: left !important;
+    font-size: 1em !important;
+    font-weight: 400 !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    color: #7f7f78 !important;
+    margin: 0 !important;
+  }
+
+  /* Content slide headings – Ctrl+P */
+  html:not(.print-pdf) .reveal .slides > section:not(:first-child) > h1 {
+    font-size: var(--cs-h1-size) !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.04em !important;
+    color: #4b4b45 !important;
+    margin: 0 0 0.25em 0 !important;
+    line-height: 1.1 !important;
+    text-align: left !important;
+  }
+  html:not(.print-pdf) .reveal .slides > section:not(:first-child) > h2 {
+    font-size: var(--cs-h2-size) !important;
+    font-weight: 400 !important;
+    color: #7f7f78 !important;
+    margin: 0 0 0.85em 0 !important;
+    text-align: left !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
   }
 
   /* SEB header logo — content:url() for reliable print */
@@ -852,8 +971,8 @@ html.reveal-print .reveal .markdown-alert-important .markdown-alert-title { colo
     content: url('../logos/seb-professional.png') !important;
     display: block !important;
     position: relative !important;
-    width: 160px !important;
-    height: 30px !important;
+    width: 25% !important;
+    height: 3% !important;
     margin: 0 0 16px 0 !important;
     object-fit: contain !important;
     object-position: left center !important;
@@ -908,10 +1027,11 @@ html.reveal-print .reveal .markdown-alert-important .markdown-alert-title { colo
   }
 
   html:not(.print-pdf) .reveal li,
-  html:not(.print-pdf) .reveal p,
   html:not(.print-pdf) .reveal td {
     color: #4b4b45 !important;
-    font-size: inherit !important;
+  }
+  html:not(.print-pdf) .reveal p {
+    color: #4b4b45 !important;
   }
 
   /* Fix: enforce correct size and block display for lists on content slides */
@@ -963,17 +1083,39 @@ html.reveal-print .reveal .markdown-alert-important .markdown-alert-title { colo
   /* Markdown alerts – browser Ctrl+P */
   html:not(.print-pdf) .reveal .markdown-alert {
     border-left: 4px solid #0969da !important;
+    border-radius: 4px !important;
     padding: 0.4em 0.8em !important;
     margin: 0.6em 0 !important;
     background: rgba(255, 255, 255, 0.35) !important;
+    font-size: var(--cs-body-size) !important;
+    line-height: 1.5 !important;
+    text-align: left !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
   html:not(.print-pdf) .reveal .markdown-alert .markdown-alert-title {
     font-weight: 700 !important;
+    font-size: 1em !important;
     display: flex !important;
     align-items: center !important;
     gap: 0.35em !important;
+    margin: 0 0 0.2em 0 !important;
+    color: #0969da !important;
+  }
+  html:not(.print-pdf) .reveal .markdown-alert .markdown-alert-title .octicon,
+  html:not(.print-pdf) .reveal .markdown-alert .markdown-alert-title svg,
+  html:not(.print-pdf) .reveal .markdown-alert .markdown-alert-icon {
+    width: 1em !important;
+    height: 1em !important;
+    flex-shrink: 0 !important;
+    fill: currentColor !important;
+  }
+  html:not(.print-pdf) .reveal .markdown-alert > p:not(.markdown-alert-title) {
+    font-size: 0.88em !important;
+    margin: 0.15em 0 !important;
+    color: #4b4b45 !important;
   }
   html:not(.print-pdf) .reveal .markdown-alert-note { border-left-color: #0969da !important; }
   html:not(.print-pdf) .reveal .markdown-alert-note .markdown-alert-title { color: #0969da !important; }
@@ -985,6 +1127,20 @@ html.reveal-print .reveal .markdown-alert-important .markdown-alert-title { colo
   html:not(.print-pdf) .reveal .markdown-alert-caution .markdown-alert-title { color: #8250df !important; }
   html:not(.print-pdf) .reveal .markdown-alert-important { border-left-color: #d1242f !important; }
   html:not(.print-pdf) .reveal .markdown-alert-important .markdown-alert-title { color: #d1242f !important; }
+
+  /* Content body elements – Ctrl+P */
+  html:not(.print-pdf) .reveal .slides > section:not(:first-child) > p,
+  html:not(.print-pdf) .reveal .slides > section:not(:first-child) > table,
+  html:not(.print-pdf) .reveal .slides > section:not(:first-child) > pre,
+  html:not(.print-pdf) .reveal .slides > section:not(:first-child) > blockquote {
+    font-size: var(--cs-body-size) !important;
+    line-height: 1.55 !important;
+    text-align: left !important;
+    color: #4b4b45 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
 }
 
 /* ── Footer logos via HTML (still supported if user adds them) ─ */
