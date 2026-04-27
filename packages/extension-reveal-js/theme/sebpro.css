@@ -786,6 +786,32 @@ html.reveal-print .reveal .slides .pdf-page > section > ol {
   list-style-type: decimal !important;
 }
 
+/* Markdown alerts in print-pdf */
+html.reveal-print .reveal .markdown-alert {
+  border-left: 4px solid #0969da !important;
+  padding: 0.4em 0.8em !important;
+  margin: 0.6em 0 !important;
+  background: rgba(255, 255, 255, 0.35) !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+html.reveal-print .reveal .markdown-alert .markdown-alert-title {
+  font-weight: 700 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.35em !important;
+}
+html.reveal-print .reveal .markdown-alert-note { border-left-color: #0969da !important; }
+html.reveal-print .reveal .markdown-alert-note .markdown-alert-title { color: #0969da !important; }
+html.reveal-print .reveal .markdown-alert-tip { border-left-color: #1a7f37 !important; }
+html.reveal-print .reveal .markdown-alert-tip .markdown-alert-title { color: #1a7f37 !important; }
+html.reveal-print .reveal .markdown-alert-warning { border-left-color: #d48806 !important; }
+html.reveal-print .reveal .markdown-alert-warning .markdown-alert-title { color: #d48806 !important; }
+html.reveal-print .reveal .markdown-alert-caution { border-left-color: #8250df !important; }
+html.reveal-print .reveal .markdown-alert-caution .markdown-alert-title { color: #8250df !important; }
+html.reveal-print .reveal .markdown-alert-important { border-left-color: #d1242f !important; }
+html.reveal-print .reveal .markdown-alert-important .markdown-alert-title { color: #d1242f !important; }
+
 /* ── @media print mode (browser Ctrl+P) ──────────────── */
 @media print {
   *,
@@ -933,6 +959,32 @@ html.reveal-print .reveal .slides .pdf-page > section > ol {
   html:not(.print-pdf) .reveal .cols-2 p {
     margin: 0 0 0.5em 0 !important;
   }
+
+  /* Markdown alerts – browser Ctrl+P */
+  html:not(.print-pdf) .reveal .markdown-alert {
+    border-left: 4px solid #0969da !important;
+    padding: 0.4em 0.8em !important;
+    margin: 0.6em 0 !important;
+    background: rgba(255, 255, 255, 0.35) !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  html:not(.print-pdf) .reveal .markdown-alert .markdown-alert-title {
+    font-weight: 700 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.35em !important;
+  }
+  html:not(.print-pdf) .reveal .markdown-alert-note { border-left-color: #0969da !important; }
+  html:not(.print-pdf) .reveal .markdown-alert-note .markdown-alert-title { color: #0969da !important; }
+  html:not(.print-pdf) .reveal .markdown-alert-tip { border-left-color: #1a7f37 !important; }
+  html:not(.print-pdf) .reveal .markdown-alert-tip .markdown-alert-title { color: #1a7f37 !important; }
+  html:not(.print-pdf) .reveal .markdown-alert-warning { border-left-color: #d48806 !important; }
+  html:not(.print-pdf) .reveal .markdown-alert-warning .markdown-alert-title { color: #d48806 !important; }
+  html:not(.print-pdf) .reveal .markdown-alert-caution { border-left-color: #8250df !important; }
+  html:not(.print-pdf) .reveal .markdown-alert-caution .markdown-alert-title { color: #8250df !important; }
+  html:not(.print-pdf) .reveal .markdown-alert-important { border-left-color: #d1242f !important; }
+  html:not(.print-pdf) .reveal .markdown-alert-important .markdown-alert-title { color: #d1242f !important; }
 }
 
 /* ── Footer logos via HTML (still supported if user adds them) ─ */
@@ -952,6 +1004,87 @@ html.reveal-print .reveal .slides .pdf-page > section > ol {
   height: 32px;
   max-height: 32px;
   width: auto;
+}
+
+/*********************************************
+ * MARKDOWN ALERTS (TIP, WARNING, CAUTION, IMPORTANT, NOTE)
+ *********************************************/
+.reveal .markdown-alert {
+  border-left: 4px solid #0969da;
+  padding: 0.4em 0.8em;
+  margin: 0.6em 0;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.35);
+  font-size: var(--cs-body-size);
+  line-height: 1.5;
+  text-align: left;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.reveal .markdown-alert .markdown-alert-title {
+  font-weight: 700 !important;
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+  gap: 0.35em;
+  margin: 0 0 0.2em 0;
+  color: #0969da;
+}
+
+.reveal .markdown-alert .markdown-alert-title .octicon,
+.reveal .markdown-alert .markdown-alert-title svg,
+.reveal .markdown-alert .markdown-alert-icon {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  fill: currentColor;
+}
+
+.reveal .markdown-alert > p:not(.markdown-alert-title) {
+  font-size: 0.88em;
+  margin: 0.15em 0;
+  color: #4b4b45;
+}
+
+/* ── NOTE (blue) ───────────────────────────────────────── */
+.reveal .markdown-alert-note {
+  border-left-color: #0969da;
+}
+.reveal .markdown-alert-note .markdown-alert-title {
+  color: #0969da;
+}
+
+/* ── TIP (green) ───────────────────────────────────────── */
+.reveal .markdown-alert-tip {
+  border-left-color: #1a7f37;
+}
+.reveal .markdown-alert-tip .markdown-alert-title {
+  color: #1a7f37;
+}
+
+/* ── WARNING (orange) ──────────────────────────────────── */
+.reveal .markdown-alert-warning {
+  border-left-color: #d48806;
+}
+.reveal .markdown-alert-warning .markdown-alert-title {
+  color: #d48806;
+}
+
+/* ── CAUTION (violet) ──────────────────────────────────── */
+.reveal .markdown-alert-caution {
+  border-left-color: #8250df;
+}
+.reveal .markdown-alert-caution .markdown-alert-title {
+  color: #8250df;
+}
+
+/* ── IMPORTANT (red) ───────────────────────────────────── */
+.reveal .markdown-alert-important {
+  border-left-color: #d1242f;
+}
+.reveal .markdown-alert-important .markdown-alert-title {
+  color: #d1242f;
 }
 
 /* ── Section-divider slide ─────────────────────────────────── */
