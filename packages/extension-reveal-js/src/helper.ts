@@ -23,6 +23,10 @@ export function getOpts () {
   return ctx.view.getRenderEnv()?.attributes?.revealJsOpts || {}
 }
 
+export function getDraft (): boolean {
+  return ctx.view.getRenderEnv()?.attributes?.draft === true
+}
+
 export function buildHTML (theme: string, init = true) {
   const baseUrl = getExtensionBasePath(extensionId)
 
@@ -56,7 +60,7 @@ export function getState (win: Window) {
   return Reveal.getState()
 }
 
-export async function processReveal (win: Window, opts: Record<string, any>, contentHtml: string | Promise<string>, init: boolean, state?: any) {
+export async function processReveal (win: Window, opts: Record<string, any>, contentHtml: string | Promise<string>, init: boolean, state?: any, draft = false) {
   const content = await contentHtml
 
   const tmp = document.createElement('div')
@@ -104,6 +108,16 @@ export async function processReveal (win: Window, opts: Record<string, any>, con
   for (const p of Array.from(slides!.querySelectorAll('section > p'))) {
     if (p.textContent?.trim() === ':::') {
       p.remove()
+    }
+  }
+
+  // Inject DRAFT stamp on every slide when draft mode is enabled
+  if (draft) {
+    for (const section of Array.from(slides!.querySelectorAll('section'))) {
+      const stamp = win.window.document.createElement('div')
+      stamp.className = 'draft-stamp'
+      stamp.textContent = 'DRAFT'
+      section.appendChild(stamp)
     }
   }
 
@@ -156,6 +170,7 @@ export async function present (print = false) {
 
   const htmlTitle = ctx.store.state.currentFile?.name || 'Reveal.js'
   const opts = getOpts()
+  const draft = getDraft()
   const theme = opts.theme || 'black'
 
   const html = buildHTML(theme)
@@ -175,7 +190,7 @@ export async function present (print = false) {
   }
 
   (win.window as any).initReveal = async () => {
-    processReveal(win, opts, contentPromise, true)
+    processReveal(win, opts, contentPromise, true, undefined, draft)
 
     if (print) {
       setTimeout(() => win.window.print(), 1500)
@@ -183,7 +198,7 @@ export async function present (print = false) {
   }
 
   (win.window as any).updateReveal = async (contentHtml: string) => {
-    processReveal(win, opts, contentHtml, false)
+    processReveal(win, opts, contentHtml, false, undefined, draft)
 
     if (print) {
       setTimeout(() => win.window.print(), 1500)

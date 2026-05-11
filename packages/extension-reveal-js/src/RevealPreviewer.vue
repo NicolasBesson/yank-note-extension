@@ -15,7 +15,7 @@
 
 <script lang="ts" setup>
 import { ctx } from '@yank-note/runtime-api'
-import { buildHTML, processReveal, getContentHtml, getOpts, present, i18n, getState } from './helper'
+import { buildHTML, processReveal, getContentHtml, getOpts, present, i18n, getState, getDraft } from './helper'
 
 const logger = ctx.utils.getLogger('reveal-previewer')
 
@@ -46,7 +46,7 @@ async function _processReveal (init: boolean) {
   if (iframe.value) {
     const opts = getOpts()
     const win = iframe.value.contentWindow!
-    await processReveal(win, opts, getContentHtml(), init, state)
+    await processReveal(win, opts, getContentHtml(), init, state, getDraft())
     state = null
   }
 }
